@@ -1,11 +1,10 @@
-
-
 import 'package:carvo/features/auth/data_source/model/user_cred.dart';
 import 'package:carvo/features/auth/domin/auth_result.dart';
 import 'package:carvo/models/user_model.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import '../../../core/app_string.dart';
+ 
 class AuthRepository {
   Future<AuthResult<UserModel?>> signIn({
     required String email,
@@ -19,12 +18,12 @@ class AuthRepository {
       final profile = await AuthService.getCurrentUserProfile();
       return AuthSuccess(profile);
     } on FirebaseAuthException {
-      return const AuthFailure('بيانات الدخول غير صحيحة، أو أنشئ حساباً جديداً');
+      return const AuthFailure(AppStrings.invalidLoginError);
     } catch (_) {
-      return const AuthFailure('حدث خطأ غير متوقع، حاول مرة أخرى');
+      return const AuthFailure(AppStrings.genericSignInError);
     }
   }
- 
+
   Future<AuthResult<UserModel?>> signInWithGoogle() async {
     try {
       final UserCredential? cred = await AuthService.signInWithGoogle();
@@ -35,10 +34,10 @@ class AuthRepository {
       final profile = await AuthService.getCurrentUserProfile();
       return AuthSuccess(profile);
     } catch (_) {
-      return const AuthFailure('تعذر تسجيل الدخول عبر Google');
+      return const AuthFailure(AppStrings.googleSignInError);
     }
   }
- 
+
   /// Creates the Firebase Auth account and the matching Firestore profile.
   /// Does NOT sign the resulting session in for app-navigation purposes —
   /// per the product decision, the user is sent back to LoginScreen after
@@ -49,15 +48,15 @@ class AuthRepository {
   /// createUserWithEmailAndPassword.
   Future<AuthResult<void>> signUp(SignUpCredentials credentials) async {
     if (!credentials.hasAllFields) {
-      return const AuthFailure('يرجى ملء كافة الحقول');
+      return const AuthFailure(AppStrings.emptyFieldsError);
     }
- 
+
     try {
       final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: credentials.email.trim(),
         password: credentials.password.trim(),
       );
- 
+
       final newUser = UserModel(
         uid: cred.user!.uid,
         name: credentials.name.trim(),
@@ -67,31 +66,30 @@ class AuthRepository {
         type: 'customer',
       );
       await AuthService.saveUserProfile(newUser);
- 
+
       // Sign out immediately: account + profile now exist, but per the
       // chosen flow the user must log in explicitly afterward rather than
       // landing in an authenticated session automatically.
       await FirebaseAuth.instance.signOut();
- 
+
       return const AuthSuccess(null);
     } on FirebaseAuthException catch (e) {
       return AuthFailure(_mapSignUpError(e));
     } catch (_) {
-      return const AuthFailure('حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى');
+      return const AuthFailure(AppStrings.genericSignUpError);
     }
   }
- 
+
   String _mapSignUpError(FirebaseAuthException e) {
     switch (e.code) {
       case 'email-already-in-use':
-        return 'البريد الإلكتروني مستخدم بالفعل';
+        return AppStrings.emailAlreadyInUseError;
       case 'weak-password':
-        return 'كلمة المرور ضعيفة جداً';
+        return AppStrings.weakPasswordError;
       case 'invalid-email':
-        return 'صيغة البريد الإلكتروني غير صحيحة';
+        return AppStrings.invalidEmailError;
       default:
-        return 'حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى';
+        return AppStrings.genericSignUpError;
     }
   }
 }
- 

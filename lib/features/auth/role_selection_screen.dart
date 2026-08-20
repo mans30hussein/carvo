@@ -17,7 +17,7 @@ class RoleSelectionScreen extends StatefulWidget {
 }
 
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
-  String _selectedRole = 'customer'; // 'customer', 'vendor', 'mechanic', 'winch'
+  String _selectedRole = 'vendor'; // 'customer', 'vendor', 'mechanic', 'winch'
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
