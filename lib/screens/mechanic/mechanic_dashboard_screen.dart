@@ -7,7 +7,7 @@ import '../../constants/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../models/emergency_model.dart';
  
-import '../auth/login_screen.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 
 class MechanicDashboardScreen extends StatefulWidget {
   final UserModel user;

@@ -6,7 +6,7 @@ import '../../constants/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../models/product_model.dart';
  
-import '../auth/login_screen.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 import 'add_product_screen.dart';
 
 class VendorDashboardScreen extends StatefulWidget {

@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../constants/app_colors.dart';
 import '../../models/user_model.dart';
- import '../customer/customer_home_screen.dart';
-import '../vendor/vendor_dashboard_screen.dart';
-import '../mechanic/mechanic_dashboard_screen.dart';
-import '../winch/winch_dashboard_screen.dart';
+ import '../../screens/customer/customer_home_screen.dart';
+import '../../screens/vendor/vendor_dashboard_screen.dart';
+import '../../screens/mechanic/mechanic_dashboard_screen.dart';
+import '../../screens/winch/winch_dashboard_screen.dart';
 
 class RoleSelectionScreen extends StatefulWidget {
   const RoleSelectionScreen({Key? key}) : super(key: key);

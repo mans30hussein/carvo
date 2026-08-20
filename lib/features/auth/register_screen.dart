@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
  import '../../models/user_model.dart';
-import '../admin/admin_dashboard_screen.dart';
-import '../customer/customer_home_screen.dart';
-import '../vendor/vendor_dashboard_screen.dart';
-import '../mechanic/mechanic_dashboard_screen.dart';
-import '../winch/winch_dashboard_screen.dart';
+import '../../screens/admin/admin_dashboard_screen.dart';
+import '../../screens/customer/customer_home_screen.dart';
+import '../../screens/vendor/vendor_dashboard_screen.dart';
+import '../../screens/mechanic/mechanic_dashboard_screen.dart';
+import '../../screens/winch/winch_dashboard_screen.dart';
 import 'role_selection_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();

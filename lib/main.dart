@@ -1,6 +1,10 @@
 import 'package:carvo/constants/app_theme.dart';
+import 'package:carvo/core/depandency_injection/depandency_injection.dart';
+import 'package:carvo/core/routing/app_routes.dart';
+import 'package:carvo/features/auth/presentation/screens/login_screen.dart';
 import 'package:carvo/firebase_options.dart';
-import 'package:carvo/screens/auth/role_selection_screen.dart';
+import 'package:carvo/features/auth/role_selection_screen.dart';
+import 'package:carvo/screens/admin/admin_dashboard_screen.dart';
 import 'package:carvo/screens/splash_screen.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AuthService.initGoogleSignIn();
+  setupAuthDependencies();
+
   try {
     await Firebase.initializeApp();
   } catch (e) {
@@ -35,7 +41,9 @@ class CarVoApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const SplashScreen(),
+      home: const AdminDashboardScreen(),
+      //       initialRoute: AppRoutes.login,   // شاشة البداية
+      // onGenerateRoute: generateAppRoute,
     );
   }
 }

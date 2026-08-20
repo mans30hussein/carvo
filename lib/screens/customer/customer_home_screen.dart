@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../models/user_model.dart';
- import '../auth/login_screen.dart';
+ import '../../features/auth/presentation/screens/login_screen.dart';
 import 'store_screen.dart';
 import 'cart_screen.dart';
 import 'emergency_request_screen.dart';

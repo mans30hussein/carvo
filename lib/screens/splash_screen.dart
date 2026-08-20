@@ -1,10 +1,10 @@
+import 'package:carvo/features/auth/presentation/screens/login_screen.dart';
+import 'package:carvo/features/auth/role_selection_screen.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
  import '../models/user_model.dart';
-import 'auth/login_screen.dart';
-import 'auth/role_selection_screen.dart';
 import 'customer/customer_home_screen.dart';
 import 'vendor/vendor_dashboard_screen.dart';
 import 'mechanic/mechanic_dashboard_screen.dart';
@@ -50,10 +50,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         // );
       }
     } else {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (_) => const LoginScreen()),
-    //   );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
      }
   }
 

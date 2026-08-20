@@ -14,8 +14,8 @@ class FirestoreService {
     });
   }
 
-  static Future<void> addProduct(ProductModel product) async {
-    await _db.collection('products').doc(product.id).set(product.toMap());
+ static Future<void> addProduct(ProductModel product) async {
+     await _db.collection('products').doc(product.id).set(product.toMap());
   }
 
   static Future<void> deleteProduct(String productId) async {
