@@ -9,6 +9,7 @@ class AuthTextField extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final TextInputType keyboardType;
+  final int maxLines;
 
   const AuthTextField({
     super.key,
@@ -17,6 +18,7 @@ class AuthTextField extends StatelessWidget {
     required this.icon,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
+    this.maxLines = 1,
   });
 
   @override
@@ -25,6 +27,7 @@ class AuthTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      maxLines: obscureText ? 1 : maxLines,
       style: AppStyles.fieldText,
       decoration: InputDecoration(
         labelText: label,
