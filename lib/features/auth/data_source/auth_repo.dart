@@ -3,7 +3,7 @@ import 'package:carvo/features/auth/domin/auth_result.dart';
 import 'package:carvo/models/user_model.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../core/app_string.dart';
+import '../../../core/constants/app_string.dart';
  
 class AuthRepository {
   Future<AuthResult<UserModel?>> signIn({

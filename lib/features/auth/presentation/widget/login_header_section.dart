@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
- import '../../../../core/app_string.dart';
+ import '../../../../core/constants/app_string.dart';
  import 'auth_header.dart';
 
 /// Login-specific wrapper around the shared AuthHeader — keeps

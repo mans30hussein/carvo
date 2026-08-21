@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/app_string.dart';
+import '../../../../core/constants/app_string.dart';
 import 'auth_text_field.dart';
 import 'primary_auth_button.dart';
 

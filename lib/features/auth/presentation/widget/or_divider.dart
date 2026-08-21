@@ -1,8 +1,8 @@
-import 'package:carvo/core/app_string.dart';
+import 'package:carvo/core/constants/app_string.dart';
 import 'package:carvo/core/app_style.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../constants/app_colors.dart';
+import '../../../../core/constants/app_colors.dart';
  
 
 class OrDivider extends StatelessWidget {

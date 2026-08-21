@@ -3,8 +3,8 @@ import 'package:carvo/features/auth/presentation/widget/auth_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../constants/app_colors.dart';
-import '../../../../core/app_string.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_string.dart';
 import '../../../../core/app_style.dart';
 import '../../../../core/depandency_injection/depandency_injection.dart';
 import '../../data_source/model/user_cred.dart';

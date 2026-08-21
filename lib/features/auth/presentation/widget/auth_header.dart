@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/app_colors.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/app_style.dart';
  
 /// Icon circle + title + subtitle, used identically on both LoginScreen

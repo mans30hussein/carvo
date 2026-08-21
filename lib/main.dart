@@ -1,4 +1,4 @@
-import 'package:carvo/constants/app_theme.dart';
+import 'package:carvo/core/constants/app_theme.dart';
 import 'package:carvo/core/depandency_injection/depandency_injection.dart';
 import 'package:carvo/core/routing/app_routes.dart';
 import 'package:carvo/features/auth/presentation/screens/login_screen.dart';

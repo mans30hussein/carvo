@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
  
-import '../../../../constants/app_colors.dart';
+import '../../../../core/constants/app_colors.dart';
  
 import '../../../../core/depandency_injection/depandency_injection.dart';
 import '../maneger/login_cubit/login_cubit.dart';

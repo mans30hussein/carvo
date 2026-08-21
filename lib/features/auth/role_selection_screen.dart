@@ -2,7 +2,7 @@ import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../constants/app_colors.dart';
+import '../../core/constants/app_colors.dart';
 import '../../models/user_model.dart';
  import '../../screens/customer/customer_home_screen.dart';
 import '../../screens/vendor/vendor_dashboard_screen.dart';
