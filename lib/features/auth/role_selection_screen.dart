@@ -1,10 +1,11 @@
+import 'package:carvo/core/constants/app_string.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/constants/app_colors.dart';
 import '../../models/user_model.dart';
- import '../../screens/customer/customer_home_screen.dart';
+import '../../screens/customer/customer_home_screen.dart';
 import '../../screens/vendor/vendor_dashboard_screen.dart';
 import '../../screens/mechanic/mechanic_dashboard_screen.dart';
 import '../../screens/winch/winch_dashboard_screen.dart';
@@ -49,7 +50,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
     if (name.isEmpty || phone.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("يرجى استكمال جميع الحقول المطلوبة", style: GoogleFonts.cairo(color: Colors.white)),
+          content: Text(
+            AppStrings.completeRequiredFields,
+            style: GoogleFonts.cairo(color: Colors.white),
+          ),
           backgroundColor: AppColors.surface,
         ),
       );
@@ -165,24 +169,27 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String nameHint = "الاسم بالكامل";
-    String addressHint = "العنوان بالتفصيل (المحافظة، المدينة، الشارع)";
+    String nameHint = AppStrings.nameHintCustomer;
+    String addressHint = AppStrings.addressHintCustomer;
 
     if (_selectedRole == 'vendor') {
-      nameHint = "اسم المحل أو الشركة";
-      addressHint = "عنوان المحل / الشركة بالتفصيل";
+      nameHint = AppStrings.nameHintVendor;
+      addressHint = AppStrings.addressHintVendor;
     } else if (_selectedRole == 'mechanic') {
-      nameHint = "اسم الورشة / الفني";
-      addressHint = "عنوان الورشة بالتفصيل";
+      nameHint = AppStrings.nameHintMechanic;
+      addressHint = AppStrings.addressHintMechanic;
     } else if (_selectedRole == 'winch') {
-      nameHint = "اسم السائق / الونش";
-      addressHint = "نطاق التغطية والعنوان بالتفصيل";
+      nameHint = AppStrings.nameHintWinch;
+      addressHint = AppStrings.addressHintWinch;
     }
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text("استكمال الحساب", style: GoogleFonts.cairo(fontWeight: FontWeight.bold)),
+        title: Text(
+          AppStrings.roleSelectionTitle,
+          style: GoogleFonts.cairo(fontWeight: FontWeight.bold),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -191,8 +198,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "اختر نوع حسابك:",
-                style: GoogleFonts.cairo(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+                AppStrings.chooseAccountType,
+                style: GoogleFonts.cairo(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 12),
 
@@ -201,15 +212,15 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 children: [
                   _buildRoleCard(
                     roleKey: 'customer',
-                    title: "🚗 عميل",
-                    subtitle: "طلب قطع وغيار وإنقاذ",
+                    title: AppStrings.roleCustomerTitle,
+                    subtitle: AppStrings.roleCustomerSubtitle,
                     icon: Icons.directions_car_rounded,
                   ),
                   const SizedBox(width: 12),
                   _buildRoleCard(
                     roleKey: 'vendor',
-                    title: "🏪 تاجر / محل",
-                    subtitle: "بيع وإدارة قطع الغيار",
+                    title: AppStrings.roleVendorTitle,
+                    subtitle: AppStrings.roleVendorSubtitle,
                     icon: Icons.storefront_rounded,
                   ),
                 ],
@@ -221,15 +232,15 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 children: [
                   _buildRoleCard(
                     roleKey: 'mechanic',
-                    title: "🔧 ميكانيكي / ورشة",
-                    subtitle: "استقبال أعطال وصيانة",
+                    title: AppStrings.roleMechanicTitle,
+                    subtitle: AppStrings.roleMechanicSubtitle,
                     icon: Icons.build_rounded,
                   ),
                   const SizedBox(width: 12),
                   _buildRoleCard(
                     roleKey: 'winch',
-                    title: "🛻 ونش إنقاذ",
-                    subtitle: "سحب وطوارئ الطرق",
+                    title: AppStrings.roleWinchTitle,
+                    subtitle: AppStrings.roleWinchSubtitle,
                     icon: Icons.local_shipping_rounded,
                   ),
                 ],
@@ -237,8 +248,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               const SizedBox(height: 28),
 
               Text(
-                "البيانات المطلوبة:",
-                style: GoogleFonts.cairo(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+                AppStrings.requiredData,
+                style: GoogleFonts.cairo(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 12),
 
@@ -248,7 +263,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 style: GoogleFonts.cairo(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: nameHint,
-                  prefixIcon: const Icon(Icons.person_outline_rounded, color: AppColors.primary),
+                  prefixIcon: const Icon(
+                    Icons.person_outline_rounded,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -259,7 +277,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 keyboardType: TextInputType.phone,
                 style: GoogleFonts.cairo(color: Colors.white),
                 decoration: const InputDecoration(
-                  labelText: "رقم الهاتف للتواصل",
+                  labelText: AppStrings.phoneContactLabel,
                   prefixIcon: Icon(Icons.phone_outlined, color: AppColors.primary),
                 ),
               ),
@@ -271,8 +289,11 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   controller: _specController,
                   style: GoogleFonts.cairo(color: Colors.white),
                   decoration: const InputDecoration(
-                    labelText: "التخصص (مثال: ميكانيكا عامة، كهرباء، عفشة...)",
-                    prefixIcon: Icon(Icons.handyman_outlined, color: AppColors.primary),
+                    labelText: AppStrings.specializationLabel,
+                    prefixIcon: Icon(
+                      Icons.handyman_outlined,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -285,7 +306,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 style: GoogleFonts.cairo(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: addressHint,
-                  prefixIcon: const Icon(Icons.location_on_outlined, color: AppColors.primary),
+                  prefixIcon: const Icon(
+                    Icons.location_on_outlined,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -299,8 +323,11 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : Text(
-                          "حفظ واستمرار",
-                          style: GoogleFonts.cairo(fontSize: 16, fontWeight: FontWeight.bold),
+                          AppStrings.saveAndContinue,
+                          style: GoogleFonts.cairo(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                 ),
               ),

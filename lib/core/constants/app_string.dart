@@ -33,4 +33,37 @@ class AppStrings {
   static const String emailAlreadyInUseError = 'البريد الإلكتروني مستخدم بالفعل';
   static const String weakPasswordError = 'كلمة المرور ضعيفة جداً';
   static const String invalidEmailError = 'صيغة البريد الإلكتروني غير صحيحة';
+
+  // Role selection screen
+  static const String roleSelectionTitle = 'استكمال الحساب';
+  static const String chooseAccountType = 'اختر نوع حسابك:';
+  static const String requiredData = 'البيانات المطلوبة:';
+  static const String saveAndContinue = 'حفظ واستمرار';
+  static const String completeRequiredFields = 'يرجى استكمال جميع الحقول المطلوبة';
+
+  // Roles
+  static const String roleCustomerTitle = '🚗 عميل';
+  static const String roleCustomerSubtitle = 'طلب قطع وغيار وإنقاذ';
+  static const String roleVendorTitle = '🏪 تاجر / محل';
+  static const String roleVendorSubtitle = 'بيع وإدارة قطع الغيار';
+  static const String roleMechanicTitle = '🔧 ميكانيكي / ورشة';
+  static const String roleMechanicSubtitle = 'استقبال أعطال وصيانة';
+  static const String roleWinchTitle = '🛻 ونش إنقاذ';
+  static const String roleWinchSubtitle = 'سحب وطوارئ الطرق';
+
+  // Dynamic field labels by role
+  static const String nameHintCustomer = 'الاسم بالكامل';
+  static const String nameHintVendor = 'اسم المحل أو الشركة';
+  static const String nameHintMechanic = 'اسم الورشة / الفني';
+  static const String nameHintWinch = 'اسم السائق / الونش';
+
+  static const String addressHintCustomer =
+      'العنوان بالتفصيل (المحافظة، المدينة، الشارع)';
+  static const String addressHintVendor = 'عنوان المحل / الشركة بالتفصيل';
+  static const String addressHintMechanic = 'عنوان الورشة بالتفصيل';
+  static const String addressHintWinch = 'نطاق التغطية والعنوان بالتفصيل';
+
+  static const String phoneContactLabel = 'رقم الهاتف للتواصل';
+  static const String specializationLabel =
+      'التخصص (مثال: ميكانيكا عامة، كهرباء، عفشة...)';
 }
