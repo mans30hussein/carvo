@@ -1,3 +1,4 @@
+import 'package:carvo/features/role_selection/presentation/screens/role_selection_screen.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import '../../screens/customer/customer_home_screen.dart';
 import '../../screens/vendor/vendor_dashboard_screen.dart';
 import '../../screens/mechanic/mechanic_dashboard_screen.dart';
 import '../../screens/winch/winch_dashboard_screen.dart';
-import 'role_selection_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

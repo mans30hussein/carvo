@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_string.dart';
-import 'auth_text_field.dart';
-import 'primary_auth_button.dart';
-
- 
+import '../../../../core/widgets/app_text_field.dart';
+import '../../../../core/widgets/primary_button.dart';
 
 /// Owns just the input fields and the submit action — no BLoC awareness,
 /// no navigation, no listener logic. It receives everything it needs as
@@ -27,21 +25,21 @@ class LoginFormSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AuthTextField(
+        AppTextField(
           controller: emailController,
           label: AppStrings.emailLabel,
           icon: Icons.email_outlined,
           keyboardType: TextInputType.emailAddress,
         ),
         const SizedBox(height: 16),
-        AuthTextField(
+        AppTextField(
           controller: passwordController,
           label: AppStrings.passwordLabel,
           icon: Icons.lock_outline_rounded,
           obscureText: true,
         ),
         const SizedBox(height: 16),
-        PrimaryAuthButton(
+        PrimaryButton(
           label: AppStrings.loginButton,
           isLoading: isLoading,
           onPressed: onPressed,

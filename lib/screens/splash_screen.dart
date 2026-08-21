@@ -1,5 +1,5 @@
 import 'package:carvo/features/auth/presentation/screens/login_screen.dart';
-import 'package:carvo/features/auth/role_selection_screen.dart';
+import 'package:carvo/features/role_selection/presentation/screens/role_selection_screen.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

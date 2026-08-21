@@ -3,7 +3,7 @@
  
 import 'package:carvo/core/routing/role_router.dart';
 import 'package:carvo/features/auth/presentation/screens/login_screen.dart';
-import 'package:carvo/features/auth/role_selection_screen.dart';
+import 'package:carvo/features/role_selection/presentation/screens/role_selection_screen.dart';
 import 'package:carvo/models/user_model.dart';
 import 'package:flutter/material.dart';
 

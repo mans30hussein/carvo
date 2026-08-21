@@ -40,6 +40,8 @@ class AppStrings {
   static const String requiredData = 'البيانات المطلوبة:';
   static const String saveAndContinue = 'حفظ واستمرار';
   static const String completeRequiredFields = 'يرجى استكمال جميع الحقول المطلوبة';
+  static const String genericSaveProfileError =
+      'حدث خطأ أثناء حفظ البيانات، حاول مرة أخرى';
 
   // Roles
   static const String roleCustomerTitle = '🚗 عميل';

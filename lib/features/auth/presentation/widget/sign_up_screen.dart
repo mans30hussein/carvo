@@ -7,10 +7,10 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_string.dart';
 import '../../../../core/app_style.dart';
 import '../../../../core/depandency_injection/depandency_injection.dart';
+import '../../../../core/widgets/app_text_field.dart';
+import '../../../../core/widgets/primary_button.dart';
 import '../../data_source/model/user_cred.dart';
 import '../maneger/login_cubit/sign_up_cubit/sign_up_state.dart';
-import 'auth_text_field.dart';
-import 'primary_auth_button.dart';
  
 
 class SignUpScreen extends StatelessWidget {
@@ -88,34 +88,34 @@ class _SignUpScreenState extends State<_SignUpView> {
                       subtitle: AppStrings.signUpSubtitle,
                     ),
                     const SizedBox(height: 32),
-                    AuthTextField(
+                    AppTextField(
                       controller: _nameController,
                       label: AppStrings.nameLabel,
                       icon: Icons.person_outline_rounded,
                     ),
                     const SizedBox(height: 16),
-                    AuthTextField(
+                    AppTextField(
                       controller: _emailController,
                       label: AppStrings.emailLabel,
                       icon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 16),
-                    AuthTextField(
+                    AppTextField(
                       controller: _phoneController,
                       label: AppStrings.phoneLabel,
                       icon: Icons.phone_outlined,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 16),
-                    AuthTextField(
+                    AppTextField(
                       controller: _passwordController,
                       label: AppStrings.passwordLabel,
                       icon: Icons.lock_outline_rounded,
                       obscureText: true,
                     ),
                     const SizedBox(height: 16),
-                    PrimaryAuthButton(
+                    PrimaryButton(
                       label: AppStrings.signUpButton,
                       isLoading: isLoading,
                       onPressed: () => cubit.signUp(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/app_style.dart';
- 
-class AuthTextField extends StatelessWidget {
+import '../app_style.dart';
+import '../constants/app_colors.dart';
+
+class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final IconData icon;
@@ -11,7 +11,7 @@ class AuthTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLines;
 
-  const AuthTextField({
+  const AppTextField({
     super.key,
     required this.controller,
     required this.label,
