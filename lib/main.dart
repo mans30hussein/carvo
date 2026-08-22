@@ -1,11 +1,8 @@
 import 'package:carvo/core/constants/app_theme.dart';
 import 'package:carvo/core/depandency_injection/depandency_injection.dart';
 import 'package:carvo/core/routing/app_routes.dart';
-import 'package:carvo/features/auth/presentation/screens/login_screen.dart';
-import 'package:carvo/firebase_options.dart';
-import 'package:carvo/features/role_selection/presentation/screens/role_selection_screen.dart';
-import 'package:carvo/screens/admin/admin_dashboard_screen.dart';
-import 'package:carvo/screens/splash_screen.dart';
+ import 'package:carvo/firebase_options.dart';
+ 
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
