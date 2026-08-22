@@ -24,7 +24,7 @@ void main() async {
 }
 
 class CarVoApp extends StatelessWidget {
-  const CarVoApp({Key? key}) : super(key: key);
+  const CarVoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
