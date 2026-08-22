@@ -16,7 +16,7 @@ void handleLoginStateChange(BuildContext context, LoginState state) {
 
     
       if (profile != null) {
-        Navigator.pushReplacementNamed(context, AppRoutes.dashboard, arguments: profile);
+        Navigator.pushReplacementNamed(context, AppRoutes.roleSelection, arguments: profile);
       } else {
         Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
       }

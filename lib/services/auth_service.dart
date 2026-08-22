@@ -17,7 +17,9 @@ class AuthService {
   // Must be called ONCE at app startup (e.g. in main()) before any sign-in call
   static Future<void> initGoogleSignIn() async {
     if (_googleSignInInitialized) return;
-    await _googleSignIn.initialize();
+    await _googleSignIn.initialize(
+    serverClientId: "511595511713-up9dg8ivmhh1m0dm9ukbv0a53tv8uakp.apps.googleusercontent.com"
+    );
     _googleSignInInitialized = true;
   }
 

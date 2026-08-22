@@ -12,7 +12,20 @@
           "package_name": "com.example.carvo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "511595511713-sqvfm9ctv9bknj9aaif2398nbedqmg8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carvo",
+            "certificate_hash": "a27b69bc76c9dec35d58c60d72913bd5a02ffa6a"
+          }
+        },
+        {
+          "client_id": "511595511713-up9dg8ivmhh1m0dm9ukbv0a53tv8uakp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAiZaeg_JDxX9BLdmPXpbzUEZkKtAYIgfE"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511595511713-up9dg8ivmhh1m0dm9ukbv0a53tv8uakp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "511595511713-ukv7mvn3pf9k44cgos9giqqbooojcg4h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carvo"
+              }
+            }
+          ]
         }
       }
     }

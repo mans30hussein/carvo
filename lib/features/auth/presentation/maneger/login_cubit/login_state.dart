@@ -15,7 +15,10 @@ final class LoginIdle extends LoginState {
 }
  
 final class LoginLoading extends LoginState {
-  const LoginLoading();
+  final bool isGoogle;
+  const LoginLoading({required this.isGoogle});
+    List<Object?> get props => [isGoogle];
+
 }
  
 /// profile is null when the user has no Firestore profile yet (edge case,

@@ -31,12 +31,13 @@ class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
           IconButton(
             icon: const Icon(Icons.logout_rounded),
             onPressed: () async {
-              await AuthService.signOut();
-              if (!mounted) return;
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const LoginScreen()),
-              );
+              Navigator.pop(  context); // Close the drawer if open
+             // await AuthService.signOut();
+          //    if (!mounted) return;
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (_) => const LoginScreen()),
+              // );
             },
           ),
         ],
@@ -120,7 +121,7 @@ class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
             const SizedBox(height: 24),
 
             Text(
-              "منتجات متجرك المسجلة في Firebase:",
+              "منتجات متجرك المسجلة في carvo",
               style: GoogleFonts.cairo(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

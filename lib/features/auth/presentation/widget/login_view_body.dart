@@ -39,7 +39,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
-        final isLoading = state is LoginLoading;
+      final isEmailLoading = state is LoginLoading && !state.isGoogle;
+final isGoogleLoading = state is LoginLoading && state.isGoogle;
 
         return Center(
           child: SingleChildScrollView(
@@ -51,7 +52,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 LoginFormSection(
                   emailController: _emailController,
                   passwordController: _passwordController,
-                  isLoading: isLoading,
+                  isLoading: isEmailLoading,
                   onPressed: () {
                     cubit.signIn(
                       email: _emailController.text,
@@ -61,12 +62,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 ),
                 const SizedBox(height: 20),
                 LoginFooterSection(
-                  isLoading: isLoading,
+                  // isLoading: isLoading,
                   onCreateAccountTap: () => Navigator.pushNamed(context, AppRoutes.signUp),
                 ),
                 const SizedBox(height: 16),
                 LoginSocialSection(
-                  isLoading: isLoading,
+                  isLoading: isEmailLoading,
                   onGoogleTap: cubit.signInWithGoogle,
                 ),
               ],
