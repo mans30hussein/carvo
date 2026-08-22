@@ -18,7 +18,7 @@ void main() async {
   try {
     await Firebase.initializeApp();
   } catch (e) {
-    print("Firebase Init: $e");
+   // print("Firebase Init: $e");
   }
   runApp(const CarVoApp());
 }
