@@ -49,9 +49,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           IconButton(
             icon: const Icon(Icons.logout_rounded, color: Colors.white70),
             onPressed: () async {
-              await AuthService.signOut();
-              if (!mounted) return;
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+              Navigator.pop(context);
+              // await AuthService.signOut();
+              // if (!mounted) return;
+              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
             },
           ),
         ],

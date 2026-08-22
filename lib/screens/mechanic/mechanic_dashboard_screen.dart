@@ -35,9 +35,11 @@ class _MechanicDashboardScreenState extends State<MechanicDashboardScreen> {
           IconButton(
             icon: const Icon(Icons.logout_rounded),
             onPressed: () async {
-              await AuthService.signOut();
-              if (!mounted) return;
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+              Navigator.pop(context);
+
+              // await AuthService.signOut();
+              // if (!mounted) return;
+              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
             },
           ),
         ],
