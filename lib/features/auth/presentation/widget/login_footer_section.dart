@@ -10,19 +10,19 @@ import '../../../../core/app_style.dart';
 /// and it's the piece most likely to change (e.g. becomes a Row with two
 /// TextButtons if a "forgot password" link is added later).
 class LoginFooterSection extends StatelessWidget {
-  final bool isLoading;
+ // final bool isLoading;
   final VoidCallback onCreateAccountTap;
 
   const LoginFooterSection({
     super.key,
-    required this.isLoading,
+   // required this.isLoading,
     required this.onCreateAccountTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: isLoading ? null : onCreateAccountTap,
+      onPressed: onCreateAccountTap,
       child: Text(AppStrings.noAccountPrompt, style: AppStyles.linkText),
     );
   }

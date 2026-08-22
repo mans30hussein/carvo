@@ -17,13 +17,13 @@ class LoginCubit extends Cubit<LoginState> {
       return;
     }
  
-    emit(const LoginLoading());
+    emit(const LoginLoading(isGoogle:false));
     final result = await _repository.signIn(email: email, password: password);
     _emitFromResult(result);
   }
  
   Future<void> signInWithGoogle() async {
-    emit(const LoginLoading());
+    emit(const LoginLoading(isGoogle:true));
     final result = await _repository.signInWithGoogle();
  
     // Empty-message failure = user cancelled the Google picker; go back to
