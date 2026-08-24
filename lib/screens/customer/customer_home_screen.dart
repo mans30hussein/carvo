@@ -1,3 +1,4 @@
+import 'package:carvo/core/routing/app_routes.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+         leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded, color: Colors.redAccent),
+          onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.roleSelection),
+        ),
         title: Row(
           children: [
             Container(
@@ -45,17 +50,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             Text("CarVo", style: GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 20)),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout_rounded, color: Colors.white70),
-            onPressed: () async {
-              Navigator.pop(context);
-              // await AuthService.signOut();
-              // if (!mounted) return;
-              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-            },
-          ),
-        ],
+       
       ),
       body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
