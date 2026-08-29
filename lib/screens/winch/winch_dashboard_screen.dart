@@ -1,3 +1,4 @@
+import 'package:carvo/core/routing/app_routes.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:carvo/services/firestore_service.dart';
 import 'package:flutter/material.dart';
@@ -30,14 +31,14 @@ class _WinchDashboardScreenState extends State<WinchDashboardScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+       // automaticallyImplyLeading: true,
         title: Text(widget.user.name, style: GoogleFonts.cairo(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
+             
             icon: const Icon(Icons.logout_rounded),
             onPressed: () async {
-              await AuthService.signOut();
-              if (!mounted) return;
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+              Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
             },
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:carvo/core/constants/app_theme.dart';
 import 'package:carvo/core/depandency_injection/depandency_injection.dart';
+import 'package:carvo/core/maping/gelocator.dart';
 import 'package:carvo/core/routing/app_routes.dart';
  import 'package:carvo/firebase_options.dart';
  
@@ -39,9 +40,9 @@ class CarVoApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      // home: const RoleSelectionScreen(),
-            initialRoute: AppRoutes.login,   // شاشة البداية
-      onGenerateRoute: generateAppRoute,
+      home: const LocationWidget(),
+      //       initialRoute: AppRoutes.login,   // شاشة البداية
+      // onGenerateRoute: generateAppRoute,
     );
   }
 }
