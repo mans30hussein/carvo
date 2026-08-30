@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final int maxLines;
+  final void Function()? onPressed;
 
   const AppTextField({
     super.key,
@@ -19,6 +20,7 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.maxLines = 1,
+    this.onPressed,
   });
 
   @override
@@ -31,7 +33,11 @@ class AppTextField extends StatelessWidget {
       style: AppStyles.fieldText,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppColors.primary),
+        prefixIcon: IconButton(
+          icon: Icon(icon),
+          color: AppColors.primary,
+          onPressed: onPressed ?? () {},
+        ),
       ),
     );
   }
