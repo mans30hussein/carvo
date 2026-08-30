@@ -20,10 +20,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _imageController = TextEditingController();
 
-  String _selectedCategory = 'قطع غيار محرك';
+  String _selectedCategory = ' اختر التصنيف';
+  String _selectedBrand = 'اختر البراند';
+
   bool _isLoading = false;
 
   final List<String> _categories = [
+    ' اختر التصنيف',
     'قطع غيار محرك',
     'فرامل وتيل',
     'فلاتر وزيوت',
@@ -31,6 +34,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'عفشة ومساعدين',
     'إطارات وجنوط',
     'إكسسوارات وعناية',
+  ];
+  final List<String> _brands = [
+    'اختر البراند',
+    'BOSCH',
+    'DENSO',
+    'NGK',
+    'MANN',
+    'KYB',
+    'ACDelco',
+    'Valeo',
+    'Mahle',
+    'Hella',
   ];
 
   @override
@@ -124,52 +139,62 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           TextField(
-            controller: _nameController,
+            controller: _descController,
+            // maxLines: 3,
             style: GoogleFonts.cairo(color: Colors.white),
             decoration: const InputDecoration(
-              labelText: "اسم قطعة الغيار (مثال: طقم تيل فرامل أمامي)",
+              labelText: "اسم القطعة والمواصفات",
               prefixIcon: Icon(
-                Icons.shopping_bag_outlined,
+                Icons.description_outlined,
                 color: AppColors.primary,
               ),
             ),
           ),
           const SizedBox(height: 16),
 
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _brandController,
-                  style: GoogleFonts.cairo(color: Colors.white),
-                  decoration: const InputDecoration(
-                    labelText: "الماركة (مثال: BOSCH)",
-                    prefixIcon: Icon(
-                      Icons.verified_outlined,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
+          DropdownButtonFormField<String>(
+            value: _selectedBrand,
+            dropdownColor: AppColors.card,
+            style: GoogleFonts.cairo(color: Colors.white),
+            decoration: const InputDecoration(
+              labelText: "البراند",
+              prefixIcon: Icon(
+                Icons.category_outlined,
+                color: AppColors.primary,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: TextField(
-                  controller: _priceController,
-                  keyboardType: TextInputType.number,
-                  style: GoogleFonts.cairo(color: Colors.white),
-                  decoration: const InputDecoration(
-                    labelText: "السعر (ج.م)",
-                    prefixIcon: Icon(
-                      Icons.attach_money_rounded,
-                      color: AppColors.primary,
-                    ),
+            ),
+            items: _brands
+                .map(
+                  (c) => DropdownMenuItem(
+                    value: c,
+                    child: Text(c, style: GoogleFonts.cairo()),
                   ),
-                ),
-              ),
-            ],
+                )
+                .toList(),
+            onChanged: (val) {
+              if (val != null) setState(() => _selectedBrand = val);
+            },
           ),
+          const SizedBox(height: 16),
+
+          TextField(
+            controller: _priceController,
+            keyboardType: TextInputType.number,
+            style: GoogleFonts.cairo(color: Colors.white),
+            decoration: const InputDecoration(
+              labelText: "السعر (ج.م)",
+              prefixIcon: Icon(
+                Icons.attach_money_rounded,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+
           const SizedBox(height: 16),
 
           // Category Dropdown
@@ -199,26 +224,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
           const SizedBox(height: 16),
 
           // Image URL Input
-          TextField(
-            controller: _imageController,
-            style: GoogleFonts.cairo(color: Colors.white),
-            decoration: const InputDecoration(
-              labelText: "رابط صورة المنتج (URL)",
-              prefixIcon: Icon(
-                Icons.image_outlined,
-                color: AppColors.primary,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
 
           // Description Input
           TextField(
             controller: _descController,
-            maxLines: 3,
+            // maxLines: 3,
             style: GoogleFonts.cairo(color: Colors.white),
             decoration: const InputDecoration(
-              labelText: "وصف القطعة والمواصفات",
+              labelText: "رقم القطعة ",
               prefixIcon: Icon(
                 Icons.description_outlined,
                 color: AppColors.primary,
@@ -226,7 +239,45 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
           ),
           const SizedBox(height: 32),
+          Text("الحالة"),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  height: 40,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    "جديد",
+                    style: GoogleFonts.cairo(color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(
+                  height: 40,
+                  alignment: Alignment.center,
 
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    "مستعمل",
+                    style: GoogleFonts.cairo(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             height: 52,

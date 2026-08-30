@@ -40,9 +40,9 @@ class CarVoApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const LocationWidget(),
-      //       initialRoute: AppRoutes.login,   // شاشة البداية
-      // onGenerateRoute: generateAppRoute,
+    //  home: const LocationWidget(),
+            initialRoute: AppRoutes.login,   // شاشة البداية
+      onGenerateRoute: generateAppRoute,
     );
   }
 }

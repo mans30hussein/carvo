@@ -10,12 +10,12 @@ void handleLoginStateChange(BuildContext context, LoginState state) {
   switch (state) {
     case LoginSuccess(:final profile) :
 
-    
-      if (profile != null) {
-        Navigator.pushReplacementNamed(context, AppRoutes.dashboard, arguments: profile);
-      } else {
-        Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
-      }
+     Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
+      // if (profile != null) {
+      //   Navigator.pushReplacementNamed(context, AppRoutes.dashboard, arguments: profile);
+      // } else {
+      //   Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
+      // }
 
     case LoginFailure(:final message) when message.isNotEmpty:
       ScaffoldMessenger.of(context).showSnackBar(
