@@ -3,6 +3,7 @@ import 'package:carvo/screens/vendor/presentation/widget/condational_selector.da
 import 'package:carvo/screens/vendor/presentation/widget/custom_drop_down_menue.dart';
 import 'package:carvo/screens/vendor/presentation/widget/custom_text_field.dart';
 import 'package:carvo/screens/vendor/presentation/widget/primary_submit_button.dart';
+import 'package:carvo/screens/vendor/presentation/widget/product_image_picker_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,7 +69,9 @@ class _AddProductViewState extends State<_AddProductView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddProductCubit, AddProductState>(
-      listenWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) =>
+          previous.status != current.status ||
+          previous.imageStatus != current.imageStatus,
       listener: (context, state) {
         if (state.status == AddProductStatus.success) {
           _clearForm();
@@ -79,6 +82,13 @@ class _AddProductViewState extends State<_AddProductView> {
             SnackBar(content: Text(state.message, style: GoogleFonts.cairo())),
           );
         }
+        if (state.imageStatus == ImageUploadStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.imageMessage, style: GoogleFonts.cairo()),
+            ),
+          );
+        }
       },
       builder: (context, state) {
         final cubit = context.read<AddProductCubit>();
@@ -87,6 +97,17 @@ class _AddProductViewState extends State<_AddProductView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text("صورة القطعة", style: GoogleFonts.cairo(color: Colors.white)),
+              const SizedBox(height: 8),
+              ProductImagePickerCard(
+                previewBytes: state.pickedImageBytes,
+                isUploading: state.imageStatus == ImageUploadStatus.uploading,
+                onSourceSelected: cubit.pickAndUploadImage,
+                onRemove:
+                    state.pickedImageBytes != null ? cubit.removeImage : null,
+              ),
+              const SizedBox(height: 24),
+
               CustomTextField(
                 controller: _nameController,
                 label: "اسم القطعة والمواصفات",
@@ -141,7 +162,7 @@ class _AddProductViewState extends State<_AddProductView> {
                     child: CustomTextField(
                       controller: _modelController,
                       label: "الموديل",
-                     // icon: Icons.model_training_outlined,
+                      // icon: Icons.model_training_outlined,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -149,7 +170,7 @@ class _AddProductViewState extends State<_AddProductView> {
                     child: CustomTextField(
                       controller: _brandMarkaController,
                       label: "الماركة",
-                     // icon: Icons.branding_watermark_outlined,
+                      // icon: Icons.branding_watermark_outlined,
                     ),
                   ),
                 ],
