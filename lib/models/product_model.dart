@@ -11,6 +11,8 @@ class ProductModel {
   final String image;
   final int stock;
   final int createdAt;
+  final String brandMarka;
+  final String modelName;
 
   ProductModel({
     required this.id,
@@ -24,6 +26,8 @@ class ProductModel {
     required this.category,
     required this.image,
     this.stock = 10,
+    required this.brandMarka,
+    required this.modelName,
     int? createdAt,
   }) : createdAt = createdAt ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -41,6 +45,8 @@ class ProductModel {
       image: map['image'] ?? 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500',
       stock: (map['stock'] as num?)?.toInt() ?? 10,
       createdAt: map['createdAt'] ?? DateTime.now().millisecondsSinceEpoch,
+      brandMarka: map['brandMarka'] ?? '',
+      modelName: map['modelName'] ?? '',
     );
   }
 
@@ -58,6 +64,8 @@ class ProductModel {
       'image': image,
       'stock': stock,
       'createdAt': createdAt,
+      'brandMarka': brandMarka,
+      'modelName': modelName,
     };
   }
 }

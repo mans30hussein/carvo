@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../models/user_model.dart';
-import '../../../../screens/vendor/add_product_screen.dart';
+import '../../../../screens/vendor/presentation/view/add_product_screen.dart';
 import '../widgetes/excel_upload_screen.dart';
 import '../widgetes/vendor_bottom_nav_bar.dart';
  import '../widgetes/wallet_screen.dart';
