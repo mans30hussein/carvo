@@ -1,14 +1,13 @@
+import 'package:carvo/features/vandor/presentation/widgetes/condition_and_compatibility.dart';
+import 'package:carvo/features/vandor/presentation/widgetes/product_detailes_section.dart';
 import 'package:carvo/models/user_model.dart';
-import 'package:carvo/screens/vendor/presentation/widget/condational_selector.dart';
-import 'package:carvo/screens/vendor/presentation/widget/custom_drop_down_menue.dart';
-import 'package:carvo/screens/vendor/presentation/widget/custom_text_field.dart';
-import 'package:carvo/screens/vendor/presentation/widget/primary_submit_button.dart';
-import 'package:carvo/screens/vendor/presentation/widget/product_image_picker_card.dart';
+ import 'package:carvo/features/vandor/presentation/widgetes/image_section.dart';
+ import 'package:carvo/features/vandor/presentation/widgetes/primary_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../cubit/add_product_cubit.dart';
-import '../cubit/add_product_state.dart';
+import '../../maneger/add_product_cubit/add_product_cubit.dart';
+import '../../maneger/add_product_cubit/add_product_state.dart';
 
 class AddProductScreen extends StatelessWidget {
   final UserModel user;
@@ -97,85 +96,26 @@ class _AddProductViewState extends State<_AddProductView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("صورة القطعة", style: GoogleFonts.cairo(color: Colors.white)),
-              const SizedBox(height: 8),
-              ProductImagePickerCard(
-                previewBytes: state.pickedImageBytes,
-                isUploading: state.imageStatus == ImageUploadStatus.uploading,
-                onSourceSelected: cubit.pickAndUploadImage,
-                onRemove:
-                    state.pickedImageBytes != null ? cubit.removeImage : null,
-              ),
+              ImageSection(state: state, cubit: cubit),
               const SizedBox(height: 24),
 
-              CustomTextField(
-                controller: _nameController,
-                label: "اسم القطعة والمواصفات",
-              ),
-              const SizedBox(height: 16),
-
-              CustomDropdownField(
-                value: state.selectedBrand,
-                label: "البراند",
-                items: kProductBrands,
-                onChanged: cubit.selectBrand,
-              ),
-              const SizedBox(height: 16),
-
-              CustomTextField(
-                controller: _priceController,
-                label: "السعر (ج.م)",
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16),
-
-              CustomDropdownField(
-                value: state.selectedCategory,
-                label: "القسم / التصنيف",
-                items: kProductCategories,
-                onChanged: cubit.selectCategory,
-              ),
-              const SizedBox(height: 16),
-
-              CustomTextField(
-                controller: _partNumberController,
-                label: "رقم القطعة",
+              ProductDetailsSection(
+                state: state,
+                cubit: cubit,
+                nameController: _nameController,
+                priceController: _priceController,
+                partNumberController: _partNumberController,
               ),
               const SizedBox(height: 32),
 
-              Text("الحالة", style: GoogleFonts.cairo(color: Colors.white)),
-              const SizedBox(height: 8),
-              ConditionSelector(
-                selected: state.condition,
-                onChanged: cubit.selectCondition,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                "توافق السيارات",
-                style: GoogleFonts.cairo(color: Colors.white),
-              ),
-              const SizedBox(height: 8),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      controller: _modelController,
-                      label: "الموديل",
-                      // icon: Icons.model_training_outlined,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: CustomTextField(
-                      controller: _brandMarkaController,
-                      label: "الماركة",
-                      // icon: Icons.branding_watermark_outlined,
-                    ),
-                  ),
-                ],
+              ConditionAndCompatibilitySection(
+                state: state,
+                cubit: cubit,
+                modelController: _modelController,
+                brandMarkaController: _brandMarkaController,
               ),
               const SizedBox(height: 32),
+
               PrimarySubmitButton(
                 isLoading: state.status == AddProductStatus.submitting,
                 label: "ارسال للمراجعة",

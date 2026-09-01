@@ -16,7 +16,6 @@ class CloudinaryUploadException implements Exception {
 /// 2. Set "Signing Mode" to "Unsigned".
 /// 3. Copy your cloud name and the preset name into the constants below.
 class CloudinaryService {
-  // TODO: replace with your own values from cloudinary.com/console
   static const String _cloudName = 'dex177xix';
   static const String _uploadPreset = 'carvo_flutter';
 

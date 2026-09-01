@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../models/user_model.dart';
-import '../../../../screens/vendor/presentation/view/add_product_screen.dart';
-import '../widgetes/excel_upload_screen.dart';
+import 'add_product_screen.dart';
+import 'excel_upload_screen.dart';
 import '../widgetes/vendor_bottom_nav_bar.dart';
- import '../widgetes/wallet_screen.dart';
+ import 'wallet_screen.dart';
 
 class VendorDashboardScreen extends StatefulWidget {
   final UserModel user;
@@ -49,12 +49,7 @@ class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
           widget.user.shopName ?? widget.user.name,
           style: GoogleFonts.cairo(fontWeight: FontWeight.bold),
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.logout_rounded),
-        //     onPressed: _handleLogout,
-        //   ),
-        // ],
+      
       ),
       bottomNavigationBar: VendorBottomNavBar(
         selectedIndex: _selectedIndex,

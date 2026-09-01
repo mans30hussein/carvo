@@ -1,11 +1,11 @@
 import 'dart:typed_data';
-import 'package:carvo/screens/vendor/presentation/widget/cloudinary_service.dart';
-import 'package:carvo/screens/vendor/presentation/widget/condational_selector.dart';
+import 'package:carvo/features/vandor/data/cloudinary_service.dart';
+import 'package:carvo/features/vandor/presentation/widgetes/condational_selector.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:carvo/services/firestore_service.dart';
  import 'package:carvo/models/user_model.dart';
-import 'package:carvo/models/product_model.dart';
+import 'package:carvo/features/customer/data/model/product_model.dart';
 import 'add_product_state.dart';
 
 const String _defaultProductImage =

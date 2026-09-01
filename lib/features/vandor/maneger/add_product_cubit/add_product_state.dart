@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:carvo/screens/vendor/presentation/widget/condational_selector.dart';
+import 'package:carvo/features/vandor/presentation/widgetes/condational_selector.dart';
 
 /// Static option lists — these don't change, so they live outside state.
 const List<String> kProductCategories = [

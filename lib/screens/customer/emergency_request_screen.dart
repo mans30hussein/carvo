@@ -102,201 +102,198 @@ class _EmergencyRequestScreenState extends State<EmergencyRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Warning Alert Header
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.sos_rounded,
-                    color: AppColors.primary,
-                    size: 36,
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Warning Alert Header
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.sos_rounded,
+                  color: AppColors.primary,
+                  size: 36,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "خدمة طوارئ الطرق السريعة",
+                        style: GoogleFonts.cairo(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        "طلب استغاثة فوري لأقرب ونش أو ميكانيكي",
+                        style: GoogleFonts.cairo(
+                          color: AppColors.textMuted,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          Text(
+            "نوع الخدمة المطلوبة:",
+            style: GoogleFonts.cairo(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () => setState(() => _selectedType = 'winch'),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: _selectedType == 'winch'
+                          ? AppColors.primary.withOpacity(0.15)
+                          : AppColors.card,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: _selectedType == 'winch'
+                            ? AppColors.primary
+                            : AppColors.border,
+                        width: 2,
+                      ),
+                    ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Icon(
+                          Icons.local_shipping_rounded,
+                          color: _selectedType == 'winch'
+                              ? AppColors.primary
+                              : AppColors.textMuted,
+                          size: 32,
+                        ),
+                        const SizedBox(height: 6),
                         Text(
-                          "خدمة طوارئ الطرق السريعة",
+                          "🛻 ونش إنقاذ",
                           style: GoogleFonts.cairo(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          "طلب استغاثة فوري لأقرب ونش أو ميكانيكي",
-                          style: GoogleFonts.cairo(
-                            color: AppColors.textMuted,
-                            fontSize: 12,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-
-            Text(
-              "نوع الخدمة المطلوبة:",
-              style: GoogleFonts.cairo(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () => setState(() => _selectedType = 'winch'),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: _selectedType == 'winch'
-                            ? AppColors.primary.withOpacity(0.15)
-                            : AppColors.card,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: _selectedType == 'winch'
-                              ? AppColors.primary
-                              : AppColors.border,
-                          width: 2,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.local_shipping_rounded,
-                            color: _selectedType == 'winch'
-                                ? AppColors.primary
-                                : AppColors.textMuted,
-                            size: 32,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "🛻 ونش إنقاذ",
-                            style: GoogleFonts.cairo(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+              const SizedBox(width: 12),
+              Expanded(
+                child: InkWell(
+                  onTap: () => setState(() => _selectedType = 'mechanic'),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: _selectedType == 'mechanic'
+                          ? AppColors.primary.withOpacity(0.15)
+                          : AppColors.card,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: _selectedType == 'mechanic'
+                            ? AppColors.primary
+                            : AppColors.border,
+                        width: 2,
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: InkWell(
-                    onTap: () => setState(() => _selectedType = 'mechanic'),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: _selectedType == 'mechanic'
-                            ? AppColors.primary.withOpacity(0.15)
-                            : AppColors.card,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.build_rounded,
                           color: _selectedType == 'mechanic'
                               ? AppColors.primary
-                              : AppColors.border,
-                          width: 2,
+                              : AppColors.textMuted,
+                          size: 32,
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.build_rounded,
-                            color: _selectedType == 'mechanic'
-                                ? AppColors.primary
-                                : AppColors.textMuted,
-                            size: 32,
+                        const SizedBox(height: 6),
+                        Text(
+                          "🔧 ميكانيكي طوارئ",
+                          style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "🔧 ميكانيكي طوارئ",
-                            style: GoogleFonts.cairo(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 24),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
 
-            // Location Input
-            TextField(
-              controller: _locationController,
-              style: GoogleFonts.cairo(color: Colors.white),
-              decoration: const InputDecoration(
-                labelText: "موقعك الحالي (الشارع، الطريق، المعلم المميز)",
-                prefixIcon: Icon(
-                  Icons.my_location_rounded,
-                  color: AppColors.primary,
-                ),
+          // Location Input
+          TextField(
+            controller: _locationController,
+            style: GoogleFonts.cairo(color: Colors.white),
+            decoration: const InputDecoration(
+              labelText: "موقعك الحالي (الشارع، الطريق، المعلم المميز)",
+              prefixIcon: Icon(
+                Icons.my_location_rounded,
+                color: AppColors.primary,
               ),
             ),
-            const SizedBox(height: 16),
+          ),
+          const SizedBox(height: 16),
 
-            // Description Input
-            TextField(
-              controller: _descController,
-              maxLines: 3,
-              style: GoogleFonts.cairo(color: Colors.white),
-              decoration: const InputDecoration(
-                labelText: "وصف العطل أو الحالة (اختياري)",
-                prefixIcon: Icon(Icons.notes_rounded, color: AppColors.primary),
-              ),
+          // Description Input
+          TextField(
+            controller: _descController,
+            maxLines: 3,
+            style: GoogleFonts.cairo(color: Colors.white),
+            decoration: const InputDecoration(
+              labelText: "وصف العطل أو الحالة (اختياري)",
+              prefixIcon: Icon(Icons.notes_rounded, color: AppColors.primary),
             ),
-            const SizedBox(height: 32),
+          ),
+          const SizedBox(height: 32),
 
-            // Submit Button
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                onPressed: _isSending ? null : _sendEmergencyRequest,
-                icon: const Icon(Icons.send_rounded),
-                label: _isSending
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Text(
-                        "إرسال طلب الاستغاثة الآن",
-                        style: GoogleFonts.cairo(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+          // Submit Button
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: ElevatedButton.icon(
+              onPressed: _isSending ? null : _sendEmergencyRequest,
+              icon: const Icon(Icons.send_rounded),
+              label: _isSending
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : Text(
+                      "إرسال طلب الاستغاثة الآن",
+                      style: GoogleFonts.cairo(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  elevation: 6,
-                ),
+                    ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                elevation: 6,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
