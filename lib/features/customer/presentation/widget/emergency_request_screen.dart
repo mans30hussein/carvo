@@ -1,9 +1,9 @@
 import 'package:carvo/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../core/constants/app_colors.dart';
-import '../../models/user_model.dart';
-import '../../models/emergency_model.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../models/user_model.dart';
+import '../../../../models/emergency_model.dart';
 
 class EmergencyRequestScreen extends StatefulWidget {
   final UserModel user;

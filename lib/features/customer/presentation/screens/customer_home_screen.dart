@@ -1,11 +1,11 @@
 import 'package:carvo/core/routing/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../core/constants/app_colors.dart';
-import '../../models/user_model.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../models/user_model.dart';
 import 'store_screen.dart';
 import 'cart_screen.dart';
-import 'emergency_request_screen.dart';
+import '../widget/emergency_request_screen.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   final UserModel user;
