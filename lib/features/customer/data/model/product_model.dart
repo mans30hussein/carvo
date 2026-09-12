@@ -13,6 +13,7 @@ class ProductModel {
   final int createdAt;
   final String brandMarka;
   final String modelName;
+  final String status; // 'pending' or 'published'
 
   ProductModel({
     required this.id,
@@ -28,6 +29,7 @@ class ProductModel {
     this.stock = 10,
     required this.brandMarka,
     required this.modelName,
+    this.status = 'pending',
     int? createdAt,
   }) : createdAt = createdAt ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -47,6 +49,10 @@ class ProductModel {
       createdAt: map['createdAt'] ?? DateTime.now().millisecondsSinceEpoch,
       brandMarka: map['brandMarka'] ?? '',
       modelName: map['modelName'] ?? '',
+      // Existing products in Firestore won't have this field yet.
+      // Default them to 'published' so nothing already-live silently
+      // disappears into a review queue after this migration.
+      status: map['status'] ?? 'published',
     );
   }
 
@@ -66,6 +72,27 @@ class ProductModel {
       'createdAt': createdAt,
       'brandMarka': brandMarka,
       'modelName': modelName,
+      'status': status,
     };
+  }
+
+  ProductModel copyWith({String? status}) {
+    return ProductModel(
+      id: id,
+      vendorId: vendorId,
+      vendorName: vendorName,
+      name: name,
+      description: description,
+      brandName: brandName,
+      originalPrice: originalPrice,
+      finalPrice: finalPrice,
+      category: category,
+      image: image,
+      stock: stock,
+      brandMarka: brandMarka,
+      modelName: modelName,
+      status: status ?? this.status,
+      createdAt: createdAt,
+    );
   }
 }

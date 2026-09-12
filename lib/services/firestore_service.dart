@@ -74,4 +74,9 @@ class FirestoreService {
   static Future<void> toggleUserBlock(String uid, bool isBlocked) async {
     await _db.collection('users').doc(uid).update({'isBlocked': isBlocked});
   }
+  static Future<UserModel?> getUserProfile(String uid) async {
+  final doc = await _db.collection('users').doc(uid).get();
+  if (!doc.exists) return null;
+  return UserModel.fromMap(doc.data()!, doc.id);
+}
 }

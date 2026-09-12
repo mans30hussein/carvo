@@ -125,6 +125,8 @@ class AddProductCubit extends Cubit<AddProductState> {
         image: state.uploadedImageUrl ?? _defaultProductImage,
         brandMarka: brandMarka.trim(),
         modelName: modelName.trim(),
+        status: "pending",
+
       );
 
       await FirestoreService.addProduct(product);

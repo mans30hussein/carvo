@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
  import '../../models/user_model.dart';
-import '../../screens/admin/admin_dashboard_screen.dart';
+import '../admin/presentation/widget/admin_dashboard_screen.dart';
 import '../customer/presentation/screens/customer_home_screen.dart';
 import '../vandor/presentation/screeens/vendor_dashboard_screen.dart';
 import '../../screens/mechanic/mechanic_dashboard_screen.dart';

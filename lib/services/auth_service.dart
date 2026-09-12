@@ -9,6 +9,7 @@ class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  //static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   static bool _googleSignInInitialized = false;
 

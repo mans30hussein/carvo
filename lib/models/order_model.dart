@@ -39,6 +39,11 @@ class OrderModel {
   final List<OrderItem> items;
   final double totalAmount;
   final String status; // 'pending', 'confirmed', 'delivered', 'cancelled'
+  // Separate from `status` on purpose: an order can be confirmed/paid
+  // but still awaiting shipment, awaiting pickup, or already shipped.
+  // Conflating this with `status` would make it impossible to tell
+  // "payment confirmed" from "package handed to courier" later on.
+  final String shippingStatus; // 'awaiting_shipment', 'shipped', 'delivered'
   final int createdAt;
 
   OrderModel({
@@ -50,12 +55,14 @@ class OrderModel {
     required this.items,
     required this.totalAmount,
     this.status = 'pending',
+    this.shippingStatus = 'awaiting_shipment',
     int? createdAt,
   }) : createdAt = createdAt ?? DateTime.now().millisecondsSinceEpoch;
 
   factory OrderModel.fromMap(Map<String, dynamic> map, String id) {
     var rawItems = map['items'] as List<dynamic>? ?? [];
-    List<OrderItem> parsedItems = rawItems.map((i) => OrderItem.fromMap(Map<String, dynamic>.from(i))).toList();
+    List<OrderItem> parsedItems =
+        rawItems.map((i) => OrderItem.fromMap(Map<String, dynamic>.from(i))).toList();
 
     return OrderModel(
       id: id,
@@ -66,6 +73,11 @@ class OrderModel {
       items: parsedItems,
       totalAmount: (map['totalAmount'] as num?)?.toDouble() ?? 0.0,
       status: map['status'] ?? 'pending',
+      // Existing orders won't have this field. Defaulting missing values
+      // to 'awaiting_shipment' is deliberately conservative — it's safer
+      // for an old order to show up in the admin queue and get manually
+      // cleared than to silently vanish and never get shipped.
+      shippingStatus: map['shippingStatus'] ?? 'awaiting_shipment',
       createdAt: map['createdAt'] ?? DateTime.now().millisecondsSinceEpoch,
     );
   }
@@ -80,6 +92,7 @@ class OrderModel {
       'items': items.map((i) => i.toMap()).toList(),
       'totalAmount': totalAmount,
       'status': status,
+      'shippingStatus': shippingStatus,
       'createdAt': createdAt,
     };
   }
