@@ -79,4 +79,7 @@ class FirestoreService {
   if (!doc.exists) return null;
   return UserModel.fromMap(doc.data()!, doc.id);
 }
+static Future<void> updateOrderShippingStatus(String orderId, String newStatus) async {
+  await _db.collection('orders').doc(orderId).update({'shippingStatus': newStatus});
+}
 }

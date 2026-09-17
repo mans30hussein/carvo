@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/user_model.dart';
-import '../../features/admin/presentation/widget/admin_dashboard_screen.dart';
+import '../../features/admin/presentation/screen/admin_dashboard_screen.dart';
 import '../../features/customer/presentation/screens/customer_home_screen.dart';
 import '../../features/vandor/presentation/screeens/vendor_dashboard_screen.dart';
 import '../../screens/mechanic/mechanic_dashboard_screen.dart';

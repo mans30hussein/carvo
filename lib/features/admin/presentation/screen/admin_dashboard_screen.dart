@@ -1,3 +1,4 @@
+import 'package:carvo/features/admin/presentation/screen/ordered_waiting_screen.dart';
 import 'package:carvo/features/admin/presentation/widget/product_inreview_card.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:carvo/services/firestore_service.dart';
@@ -5,10 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../models/user_model.dart';
- import '../../../../models/order_model.dart';
+import '../../../../models/order_model.dart';
 import '../../../../models/emergency_model.dart';
 import '../../../auth/presentation/screens/login_screen.dart';
-
 
 enum AdminSection {
   shipping,
@@ -74,7 +74,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             style: GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           const SizedBox(width: 8),
-          const Icon(Icons.directions_car_filled_rounded, color: AppColors.primary),
+          const Icon(
+            Icons.directions_car_filled_rounded,
+            color: AppColors.primary,
+          ),
         ],
       ),
       actions: [
@@ -117,24 +120,26 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
-  Widget _shippingPendingCard() {
-    return StreamBuilder<List<OrderModel>>(
-      stream: FirestoreService.streamOrders(),
-      builder: (context, snapshot) {
-        final count = (snapshot.data ?? [])
-            .where((o) => o.shippingStatus == 'awaiting_shipment')
-            .length;
-        return StatCard(
-          icon: Icons.local_shipping_outlined,
-          iconColor: Colors.blueAccent,
-          count: count,
-          label: "طلبات بانتظار الشحن",
-        );
-      },
-    );
-  }
-
-
+Widget _shippingPendingCard() {
+  return StreamBuilder<List<OrderModel>>(
+    stream: FirestoreService.streamOrders(),
+    builder: (context, snapshot) {
+      final count = (snapshot.data ?? [])
+          .where((o) => o.shippingStatus == 'awaiting_shipment')
+          .length;
+      return StatCard(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ShippingPendingScreen()),
+        ),
+        icon: Icons.local_shipping_outlined,
+        iconColor: Colors.blueAccent,
+        count: count,
+        label: "طلبات بانتظار الشحن",
+      );
+    },
+  );
+}
 
   Widget _activeEmergenciesCard() {
     // NOTE: FirestoreService.streamEmergencies() needs to exist and
@@ -148,6 +153,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             .where((e) => e.status == 'pending' || e.status == 'accepted')
             .length;
         return StatCard(
+          onTap: () {
+            print('Active emergencies count: $count'); // Debugging line
+            // Navigate to the active emergencies screen
+            // Navigator.pushNamed(context, '/activeEmergencies');
+          },
           icon: Icons.shield_outlined,
           iconColor: Colors.pinkAccent,
           count: count,
@@ -165,6 +175,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             .where((u) => u.type == 'vendor')
             .length;
         return StatCard(
+          onTap: () {
+            print('Merchants count: $count'); // Debugging line
+            // Navigate to the merchants screen
+            // Navigator.pushNamed(context, '/merchants');
+          },
           icon: Icons.people_alt_outlined,
           iconColor: Colors.greenAccent,
           count: count,
@@ -178,10 +193,26 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildSectionPillBar() {
     final pills = <_PillDef>[
-      _PillDef(AdminSection.shipping, "الشحن والفواتير", Icons.local_shipping_outlined),
-      _PillDef(AdminSection.excelFiles, "ملفات Excel", Icons.description_outlined),
-      _PillDef(AdminSection.productReview, "مراجعة المنتجات", Icons.inventory_2_outlined),
-      _PillDef(AdminSection.merchantAccounts, "حسابات التجار", Icons.credit_card_outlined),
+      _PillDef(
+        AdminSection.shipping,
+        "الشحن والفواتير",
+        Icons.local_shipping_outlined,
+      ),
+      _PillDef(
+        AdminSection.excelFiles,
+        "ملفات Excel",
+        Icons.description_outlined,
+      ),
+      _PillDef(
+        AdminSection.productReview,
+        "مراجعة المنتجات",
+        Icons.inventory_2_outlined,
+      ),
+      _PillDef(
+        AdminSection.merchantAccounts,
+        "حسابات التجار",
+        Icons.credit_card_outlined,
+      ),
       _PillDef(AdminSection.blockList, "الحظر", Icons.block_outlined),
     ];
 
@@ -248,7 +279,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 40),
-            child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+            child: Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            ),
           );
         }
 
@@ -271,7 +304,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   Icon(Icons.local_shipping_outlined, color: AppColors.primary),
                   Text(
                     "طلبات بانتظار الشحن (${pending.length})",
-                    style: GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: GoogleFonts.cairo(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
@@ -279,29 +315,40 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               if (pending.isEmpty)
                 const _EmptyState(message: "لا توجد طلبات بانتظار الشحن")
               else
-                ...pending.map((o) => Card(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("العميل: ${o.customerName}",
-                                style: GoogleFonts.cairo(fontWeight: FontWeight.bold)),
-                            Text(
-                              "الهاتف: ${o.customerPhone} • العنوان: ${o.customerAddress}",
-                              style: GoogleFonts.cairo(color: AppColors.textMuted, fontSize: 12),
+                ...pending.map(
+                  (o) => Card(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "العميل: ${o.customerName}",
+                            style: GoogleFonts.cairo(
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 6),
-                            Text(
-                              "إجمالي المبلغ: ${o.totalAmount.toStringAsFixed(0)} ج.م",
-                              style: GoogleFonts.cairo(
-                                  fontWeight: FontWeight.bold, color: AppColors.primary),
+                          ),
+                          Text(
+                            "الهاتف: ${o.customerPhone} • العنوان: ${o.customerAddress}",
+                            style: GoogleFonts.cairo(
+                              color: AppColors.textMuted,
+                              fontSize: 12,
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            "إجمالي المبلغ: ${o.totalAmount.toStringAsFixed(0)} ج.م",
+                            style: GoogleFonts.cairo(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
-                    )),
+                    ),
+                  ),
+                ),
             ],
           ),
         );
@@ -322,44 +369,56 @@ class StatCard extends StatelessWidget {
   final Color iconColor;
   final int count;
   final String label;
+  final void Function()? onTap;
 
-  const StatCard({super.key, 
+  const StatCard({
+    super.key,
     required this.icon,
     required this.iconColor,
     required this.count,
     required this.label,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: iconColor.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: iconColor, size: 20),
             ),
-            child: Icon(icon, color: iconColor, size: 20),
-          ),
-          const Spacer(),
-          Text(
-            "$count",
-            style: GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 26),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.cairo(color: AppColors.textMuted, fontSize: 12),
-          ),
-        ],
+            const Spacer(),
+            Text(
+              "$count",
+              style: GoogleFonts.cairo(
+                fontWeight: FontWeight.bold,
+                fontSize: 26,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: GoogleFonts.cairo(
+                color: AppColors.textMuted,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -375,7 +434,11 @@ class _EmptyState extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         children: [
-          const Icon(Icons.check_circle_outline_rounded, size: 40, color: Colors.white24),
+          const Icon(
+            Icons.check_circle_outline_rounded,
+            size: 40,
+            color: Colors.white24,
+          ),
           const SizedBox(height: 8),
           Text(message, style: GoogleFonts.cairo(color: AppColors.textMuted)),
         ],

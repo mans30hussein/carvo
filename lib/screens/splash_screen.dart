@@ -9,7 +9,7 @@ import '../features/customer/presentation/screens/customer_home_screen.dart';
 import '../features/vandor/presentation/screeens/vendor_dashboard_screen.dart';
 import 'mechanic/mechanic_dashboard_screen.dart';
 import 'winch/winch_dashboard_screen.dart';
-import '../features/admin/presentation/widget/admin_dashboard_screen.dart';
+import '../features/admin/presentation/screen/admin_dashboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
