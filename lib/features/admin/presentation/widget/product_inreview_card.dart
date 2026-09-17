@@ -1,4 +1,5 @@
 import 'package:carvo/features/admin/presentation/screen/admin_dashboard_screen.dart';
+import 'package:carvo/features/admin/presentation/screen/product_review_screen.dart';
 import 'package:carvo/features/customer/data/model/product_model.dart';
 import 'package:carvo/services/firestore_service.dart';
 import 'package:flutter/material.dart';
@@ -15,24 +16,15 @@ class productsInReviewCard extends StatelessWidget {
         final count = (snapshot.data ?? [])
             .where((p) => p.status == 'pending')
             .length;
-        return GestureDetector(
-          onTap: () {
-                    print('Products in review count: $count'); // Debugging line
-
-            // Navigate to the products in review screen
-       //     Navigator.pushNamed(context, '/productsInReview');
-          },
-          child: StatCard(
-            onTap: () {
-              print('Products in review count: $count'); // Debugging line
-              // Navigate to the products in review screen
-              // Navigator.pushNamed(context, '/productsInReview');
-            },
-            icon: Icons.inventory_2_outlined,
-            iconColor: Colors.orangeAccent,
-            count: count,
-            label: "منتجات قيد المراجعة",
+        return StatCard(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ProductsInReviewScreen()),
           ),
+          icon: Icons.inventory_2_outlined,
+          iconColor: Colors.orangeAccent,
+          count: count,
+          label: "منتجات قيد المراجعة",
         );
       },
     );

@@ -82,4 +82,7 @@ class FirestoreService {
 static Future<void> updateOrderShippingStatus(String orderId, String newStatus) async {
   await _db.collection('orders').doc(orderId).update({'shippingStatus': newStatus});
 }
+static Future<void> updateProductStatus(String productId, String newStatus) async {
+  await _db.collection('products').doc(productId).update({'status': newStatus});
+}
 }

@@ -142,7 +142,9 @@ class _StoreScreenState extends State<StoreScreen> {
                   );
                 }
 
-                List<ProductModel> products = snapshot.data ?? [];
+                List<ProductModel> products = (snapshot.data ?? [])
+                    .where((p) => p.status == 'published')
+                    .toList();
                 if (_searchQuery.isNotEmpty) {
                   products = products.where((p) {
                     return p.name.toLowerCase().contains(_searchQuery) ||
@@ -316,8 +318,12 @@ class _StoreScreenState extends State<StoreScreen> {
                               onPressed: () => _requestOrder(product),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.surface,
-                                side: const BorderSide(color: AppColors.primary),
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                side: const BorderSide(
+                                  color: AppColors.primary,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
