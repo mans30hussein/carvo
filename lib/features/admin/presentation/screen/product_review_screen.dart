@@ -101,6 +101,9 @@ class _ProductsInReviewScreenState extends State<ProductsInReviewScreen> {
                             return _ProductCard(
                               key: ValueKey(product.id),
                               product: product,
+                              // Only the pending queue gets the edit
+                              // action — that's the review workflow.
+                              showEdit: _filter == _Filter.pending,
                             );
                           },
                         ),
@@ -134,7 +137,8 @@ class _ProductsInReviewScreenState extends State<ProductsInReviewScreen> {
 
 class _ProductCard extends StatefulWidget {
   final ProductModel product;
-  const _ProductCard({super.key, required this.product});
+  final bool showEdit;
+  const _ProductCard({super.key, required this.product, this.showEdit = false});
 
   @override
   State<_ProductCard> createState() => _ProductCardState();
@@ -158,6 +162,18 @@ class _ProductCardState extends State<_ProductCard> {
       );
     } finally {
       if (mounted) setState(() => _isUpdating = false);
+    }
+  }
+
+  Future<void> _openEditDialog() async {
+    final saved = await showDialog<bool>(
+      context: context,
+      builder: (_) => _EditProductDialog(product: widget.product),
+    );
+    if (saved == true && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("تم حفظ التعديلات")),
+      );
     }
   }
 
@@ -240,6 +256,20 @@ class _ProductCardState extends State<_ProductCard> {
                             ),
                           ),
                         ),
+                        if (widget.showEdit && !_isUpdating)
+                          InkWell(
+                            onTap: _openEditDialog,
+                            borderRadius: BorderRadius.circular(20),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Icon(
+                                Icons.edit_rounded,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ),
+                        const SizedBox(width: 4),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -371,6 +401,167 @@ class _ProductCardState extends State<_ProductCard> {
         label: Text(
           "إعادة للمراجعة",
           style: GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 12),
+        ),
+      ),
+    );
+  }
+}
+
+/// Full edit dialog — admin can change any field on the product and
+/// save straight back to Firestore via FirestoreService.updateProductFields.
+class _EditProductDialog extends StatefulWidget {
+  final ProductModel product;
+  const _EditProductDialog({required this.product});
+
+  @override
+  State<_EditProductDialog> createState() => _EditProductDialogState();
+}
+
+class _EditProductDialogState extends State<_EditProductDialog> {
+  late final TextEditingController _nameCtrl;
+  late final TextEditingController _vendorCtrl;
+  late final TextEditingController _brandCtrl;
+  late final TextEditingController _categoryCtrl;
+  late final TextEditingController _priceCtrl;
+  late final TextEditingController _imageCtrl;
+
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.product;
+    _nameCtrl = TextEditingController(text: p.name);
+    _vendorCtrl = TextEditingController(text: p.vendorName);
+    _brandCtrl = TextEditingController(text: p.brandName);
+    _categoryCtrl = TextEditingController(text: p.category);
+    _priceCtrl = TextEditingController(text: p.finalPrice.toString());
+    _imageCtrl = TextEditingController(text: p.image);
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _vendorCtrl.dispose();
+    _brandCtrl.dispose();
+    _categoryCtrl.dispose();
+    _priceCtrl.dispose();
+    _imageCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final price = double.tryParse(_priceCtrl.text.trim());
+    if (_nameCtrl.text.trim().isEmpty || price == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("تحقق من الاسم والسعر")),
+      );
+      return;
+    }
+
+    setState(() => _saving = true);
+    try {
+      await FirestoreService.updateProductFields(widget.product.id, {
+        'name': _nameCtrl.text.trim(),
+        'vendorName': _vendorCtrl.text.trim(),
+        'brandName': _brandCtrl.text.trim(),
+        'category': _categoryCtrl.text.trim(),
+        'finalPrice': price,
+        'image': _imageCtrl.text.trim(),
+      });
+      if (mounted) Navigator.of(context).pop(true);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("فشل حفظ التعديلات: $e")),
+      );
+      setState(() => _saving = false);
+    }
+  }
+
+  Widget _field(String label, TextEditingController ctrl, {TextInputType? type}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: TextField(
+        controller: ctrl,
+        keyboardType: type,
+        style: GoogleFonts.cairo(color: Colors.white, fontSize: 13),
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: GoogleFonts.cairo(color: AppColors.textMuted, fontSize: 12),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppColors.border),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: AppColors.primary),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.card,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "تعديل المنتج",
+                style: GoogleFonts.cairo(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 12),
+              _field("اسم المنتج", _nameCtrl),
+              _field("اسم البائع", _vendorCtrl),
+              _field("العلامة التجارية", _brandCtrl),
+              _field("التصنيف", _categoryCtrl),
+              _field("السعر", _priceCtrl, type: const TextInputType.numberWithOptions(decimal: true)),
+              _field("رابط الصورة", _imageCtrl),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: _saving ? null : () => Navigator.of(context).pop(false),
+                    child: Text(
+                      "إلغاء",
+                      style: GoogleFonts.cairo(color: AppColors.textMuted),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: _saving ? null : _save,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.black,
+                    ),
+                    child: _saving
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(
+                            "حفظ",
+                            style: GoogleFonts.cairo(fontWeight: FontWeight.bold),
+                          ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

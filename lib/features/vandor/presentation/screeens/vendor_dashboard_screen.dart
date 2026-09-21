@@ -1,4 +1,5 @@
 ﻿import 'package:carvo/core/routing/app_routes.dart';
+import 'package:carvo/features/vandor/presentation/screeens/product_waiting.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,7 +32,8 @@ class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
   List<Widget> _buildScreens() {
     return [
       AddProductScreen(user: widget.user),
-     ExcelUploadScreen(user: widget.user),
+      ProductWaiting(user: widget.user),
+      ExcelUploadScreen(user: widget.user),
       WalletScreen(user: widget.user),
     ];
   }

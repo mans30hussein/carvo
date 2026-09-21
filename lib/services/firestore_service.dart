@@ -85,4 +85,13 @@ static Future<void> updateOrderShippingStatus(String orderId, String newStatus) 
 static Future<void> updateProductStatus(String productId, String newStatus) async {
   await _db.collection('products').doc(productId).update({'status': newStatus});
 }
+static Future<void> updateProductFields(
+  String productId,
+  Map<String, dynamic> fields,
+) async {
+  await FirebaseFirestore.instance
+      .collection('products')
+      .doc(productId)
+      .update(fields);
+}
 }
