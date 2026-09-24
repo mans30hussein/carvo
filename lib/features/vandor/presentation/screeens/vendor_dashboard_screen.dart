@@ -43,10 +43,10 @@ class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: Colors.redAccent),
-          onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.roleSelection),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_rounded, color: Colors.redAccent),
+        //   onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.roleSelection),
+        // ),
         title: Text(
           widget.user.shopName ?? widget.user.name,
           style: GoogleFonts.cairo(fontWeight: FontWeight.bold),

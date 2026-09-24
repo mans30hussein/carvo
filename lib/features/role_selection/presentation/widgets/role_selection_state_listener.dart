@@ -11,9 +11,13 @@ void handleRoleSelectionStateChange(
 ) {
   switch (state) {
     case RoleSelectionSuccess(:final user):
-      Navigator.pushReplacement(
+      // pushAndRemoveUntil (not pushReplacement) so the stack is fully
+      // cleared regardless of how this screen was reached — role
+      // selection can never be reached again via back button.
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => RoleRouter.dashboardFor(user)),
+        (route) => false,
       );
 
     case RoleSelectionFailure(:final message) when message.isNotEmpty:

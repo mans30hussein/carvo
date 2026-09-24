@@ -40,9 +40,9 @@ class CarVoApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
- //  home: const AdminDashboardScreen(),
-    //  home: const AdminDashboardScreen(),
-            initialRoute: AppRoutes.login,   // شاشة البداية
+ //home: const AdminDashboardScreen(),
+    // //  home: const AdminDashboardScreen(),
+           initialRoute: AppRoutes.login,   // شاشة البداية
       onGenerateRoute: generateAppRoute,
     );  
   }

@@ -13,22 +13,42 @@ class FirestoreService {
       return snapshot.docs.map((doc) => ProductModel.fromMap(doc.data(), doc.id)).toList();
     });
   }
-  static Stream<List<ProductModel>> streamVendorProducts(String vendorId) {
-  return _db
-      .collection('products')
-      .where('vendorId', isEqualTo: vendorId)
-      .snapshots()
-      .map((snapshot) {
-    return snapshot.docs.map((doc) => ProductModel.fromMap(doc.data(), doc.id)).toList();
-  });
-}
 
- static Future<void> addProduct(ProductModel product) async {
-     await _db.collection('products').doc(product.id).set(product.toMap());
+  static Stream<List<ProductModel>> streamVendorProducts(String vendorId) {
+    return _db
+        .collection('products')
+        .where('vendorId', isEqualTo: vendorId)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => ProductModel.fromMap(doc.data(), doc.id)).toList();
+    });
+  }
+
+  static Future<void> addProduct(ProductModel product) async {
+    await _db.collection('products').doc(product.id).set(product.toMap());
+  }
+
+  // Admin adding a product on behalf of a vendor. Status defaults to
+  // 'published' since an admin is creating it directly — pass 'pending'
+  // explicitly if you want it to go through review instead.
+  static Future<void> addProductForVendor(ProductModel product) async {
+    await _db.collection('products').doc(product.id).set(product.toMap());
   }
 
   static Future<void> deleteProduct(String productId) async {
     await _db.collection('products').doc(productId).delete();
+  }
+
+  static Future<void> updateProductStatus(String productId, String newStatus) async {
+    await _db.collection('products').doc(productId).update({'status': newStatus});
+  }
+
+  static Future<void> updateProductFields(
+    String productId,
+    Map<String, dynamic> fields,
+  ) async {
+    await _db.collection('products').doc(productId).update(fields);
   }
 
   // --- ORDERS ---
@@ -44,6 +64,10 @@ class FirestoreService {
 
   static Future<void> updateOrderStatus(String orderId, String newStatus) async {
     await _db.collection('orders').doc(orderId).update({'status': newStatus});
+  }
+
+  static Future<void> updateOrderShippingStatus(String orderId, String newStatus) async {
+    await _db.collection('orders').doc(orderId).update({'shippingStatus': newStatus});
   }
 
   // --- EMERGENCIES ---
@@ -71,27 +95,31 @@ class FirestoreService {
     });
   }
 
-  static Future<void> toggleUserBlock(String uid, bool isBlocked) async {
-    await _db.collection('users').doc(uid).update({'isBlocked': isBlocked});
-  }
   static Future<UserModel?> getUserProfile(String uid) async {
-  final doc = await _db.collection('users').doc(uid).get();
-  if (!doc.exists) return null;
-  return UserModel.fromMap(doc.data()!, doc.id);
-}
-static Future<void> updateOrderShippingStatus(String orderId, String newStatus) async {
-  await _db.collection('orders').doc(orderId).update({'shippingStatus': newStatus});
-}
-static Future<void> updateProductStatus(String productId, String newStatus) async {
-  await _db.collection('products').doc(productId).update({'status': newStatus});
-}
-static Future<void> updateProductFields(
-  String productId,
-  Map<String, dynamic> fields,
-) async {
-  await FirebaseFirestore.instance
-      .collection('products')
-      .doc(productId)
-      .update(fields);
-}
+    final doc = await _db.collection('users').doc(uid).get();
+    if (!doc.exists) return null;
+    return UserModel.fromMap(doc.data()!, doc.id);
+  }
+
+  // Blocking/unblocking a vendor cascades to their products' `visible`
+  // field, so the store hides/reveals their listings immediately
+  // without touching each product's own pending/published status.
+  static Future<void> setUserBlocked(String uid, bool isBlocked) async {
+    final batch = _db.batch();
+
+    batch.update(_db.collection('users').doc(uid), {
+      'isBlocked': isBlocked,
+    });
+
+    final products = await _db
+        .collection('products')
+        .where('vendorId', isEqualTo: uid)
+        .get();
+
+    for (final doc in products.docs) {
+      batch.update(doc.reference, {'visible': !isBlocked});
+    }
+
+    await batch.commit();
+  }
 }

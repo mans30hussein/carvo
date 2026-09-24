@@ -1,4 +1,6 @@
 import 'package:carvo/features/admin/presentation/screen/ordered_waiting_screen.dart';
+import 'package:carvo/features/admin/presentation/screen/vandor_list_screen.dart';
+
 import 'package:carvo/features/admin/presentation/widget/product_inreview_card.dart';
 import 'package:carvo/services/auth_service.dart';
 import 'package:carvo/services/firestore_service.dart';
@@ -175,10 +177,13 @@ Widget _shippingPendingCard() {
             .where((u) => u.type == 'vendor')
             .length;
         return StatCard(
+          // Tapping the "التجار" card now navigates to the vendors
+          // list screen instead of just printing the count.
           onTap: () {
-            print('Merchants count: $count'); // Debugging line
-            // Navigate to the merchants screen
-            // Navigator.pushNamed(context, '/merchants');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const VendorsListScreen()),
+            );
           },
           icon: Icons.people_alt_outlined,
           iconColor: Colors.greenAccent,
@@ -230,24 +235,19 @@ Widget _shippingPendingCard() {
             onSelected: (_) => setState(() => _selectedSection = pill.section),
             selectedColor: AppColors.primary,
             backgroundColor: Colors.white10,
-            label: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  pill.icon,
-                  size: 16,
-                  color: isSelected ? Colors.black : Colors.white70,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  pill.label,
-                  style: GoogleFonts.cairo(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: isSelected ? Colors.black : Colors.white70,
-                  ),
-                ),
-              ],
+            showCheckmark: false,
+            avatar: Icon(
+              pill.icon,
+              size: 16,
+              color: isSelected ? Colors.black : Colors.white70,
+            ),
+            label: Text(
+              pill.label,
+              style: GoogleFonts.cairo(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: isSelected ? Colors.black : Colors.white70,
+              ),
             ),
           );
         },
@@ -266,7 +266,14 @@ Widget _shippingPendingCard() {
       case AdminSection.productReview:
         return const _ComingSoonSection(label: "مراجعة المنتجات");
       case AdminSection.merchantAccounts:
-        return const _ComingSoonSection(label: "حسابات التجار");
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: const VendorsSectionBody(),
+        );
       case AdminSection.blockList:
         return const _ComingSoonSection(label: "الحظر");
     }
